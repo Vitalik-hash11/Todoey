@@ -49,14 +49,25 @@ class CategoryViewController: UITableViewController {
         return categoryList.count
     }
     
-    //MARK: - Table view delegate methods
-    
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "categoryCell", for: indexPath)
         cell.textLabel?.text = categoryList[indexPath.row].name
         return cell
     }
     
+    //MARK: - Table view delegate methods
+    
+    override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        performSegue(withIdentifier: "goToItems", sender: self)
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        let destinationVC = segue.destination as! ToDoViewController
+        
+        if let indexPath = tableView.indexPathForSelectedRow {
+            destinationVC.selectedCategory = categoryList[indexPath.row]
+        }
+    }
     
     //MARK: - Data model manipulation methods
     
